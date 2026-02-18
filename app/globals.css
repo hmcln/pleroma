@@ -1,17 +1,38 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
 
 :root {
+  /* Tokyo Night dark-only palette */
   --background: #1f2335;
   --foreground: #a9b1d6;
   --heading: #faba4a;
-  --muted: #414868;
   --surface: #292e42;
-  --border: #414868;
   --link: #7aa2f7;
-  --accent: #9ece6a;
   --highlight: rgba(122, 162, 247, 0.2);
   --strong: #c0caf5;
+
+  /* shadcn mappings → Tokyo Night */
+  --card: #292e42;
+  --card-foreground: #a9b1d6;
+  --popover: #292e42;
+  --popover-foreground: #a9b1d6;
+  --primary: #7aa2f7;
+  --primary-foreground: #1f2335;
+  --secondary: #292e42;
+  --secondary-foreground: #a9b1d6;
+  --muted: #414868;
+  --muted-foreground: #565f89;
+  --accent: #9ece6a;
+  --accent-foreground: #1f2335;
+  --destructive: #f7768e;
+  --border: #414868;
+  --input: #414868;
+  --ring: #7aa2f7;
+  --radius: 0.5rem;
 }
 
 @theme inline {
@@ -19,14 +40,34 @@
   --color-foreground: var(--foreground);
   --color-heading: var(--heading);
   --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-surface: var(--surface);
   --color-border: var(--border);
   --color-link: var(--link);
   --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
   --color-highlight: var(--highlight);
   --color-strong: var(--strong);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive: var(--destructive);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --font-sans: var(--font-ioskeley);
   --font-mono: var(--font-ioskeley);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
 body {
@@ -51,4 +92,10 @@ body {
   --tw-prose-quote-borders: var(--border);
   --tw-prose-th-borders: var(--border);
   --tw-prose-td-borders: var(--border);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
 }
