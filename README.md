@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pleroma – AI Syllabus Generator
 
-## Getting Started
+Generate structured educational syllabuses and lessons using OpenAI. Built with Next.js (App Router), Drizzle ORM, Postgres, and the Vercel AI SDK.
 
-First, run the development server:
+## Local Setup
+
+### 1. Install dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Set environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env.local` file:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+DATABASE_URL=postgres://user:password@host/dbname?sslmode=require
+OPENAI_API_KEY=sk-...
+APP_BASE_URL=http://localhost:3000
+```
 
-## Learn More
+Use any Postgres instance (Neon, Supabase, local Docker, etc).
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Run database migrations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Push schema directly (fastest for development):
+pnpm db:push
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Or generate + apply migrations:
+pnpm db:generate
+pnpm db:migrate
+```
 
-## Deploy on Vercel
+### 4. Start dev server
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000).
+
+## Usage
+
+1. Fill in a project/syllabus brief, select a learner level, and optionally add constraints.
+2. Click **Generate Outline** — an AI-generated syllabus with 10–25 lessons appears.
+3. On the syllabus page, click **Generate next lesson** or generate individual lessons.
+4. Click **Open** on any ready lesson to read the full Markdown-rendered content.
+
+## Tech Stack
+
+- **Next.js 16** (App Router, Server Components)
+- **Drizzle ORM** + Postgres (Neon)
+- **Vercel AI SDK** + OpenAI (`gpt-4o-mini`)
+- **react-markdown** + **remark-gfm** for Markdown rendering
+- **Tailwind CSS** + `@tailwindcss/typography` for prose styling
+
+## Deploy to Vercel
+
+1. Push the repo to GitHub/GitLab.
+2. Import in Vercel.
+3. Add a Postgres database (Vercel Postgres or Neon integration).
+4. Set environment variables: `DATABASE_URL`, `OPENAI_API_KEY`.
+5. The database schema is pushed automatically if you run `pnpm db:push` before deploying, or you can add it as a build step.
+
+## Scripts
+
+| Script | Description |
+|---|---|
+| `pnpm dev` | Start dev server |
+| `pnpm build` | Production build |
+| `pnpm db:generate` | Generate SQL migrations from schema |
+| `pnpm db:migrate` | Apply migrations |
+| `pnpm db:push` | Push schema directly (dev shortcut) |
+| `pnpm db:studio` | Open Drizzle Studio |
