@@ -43,12 +43,12 @@ export default async function LessonPage({
       <main className="min-h-screen px-6 py-12 max-w-3xl mx-auto">
         <Link
           href={`/s/${slug}`}
-          className="text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 mb-6 inline-block"
+          className="text-sm text-muted hover:text-foreground mb-6 inline-block"
         >
           ← Back to syllabus
         </Link>
-        <h1 className="text-2xl font-bold mb-4">{les.title}</h1>
-        <p className="text-zinc-500">
+        <h1 className="text-2xl font-bold mb-4 text-heading">{les.title}</h1>
+        <p className="text-muted">
           This lesson hasn&apos;t been generated yet. Go back and click
           &quot;Generate&quot; to create it.
         </p>
@@ -60,7 +60,7 @@ export default async function LessonPage({
     <main className="min-h-screen px-6 py-12 max-w-3xl mx-auto">
       <Link
         href={`/s/${slug}`}
-        className="text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 mb-6 inline-block"
+        className="text-sm text-muted hover:text-foreground mb-6 inline-block"
       >
         ← Back to syllabus
       </Link>
