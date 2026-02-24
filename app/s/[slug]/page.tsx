@@ -54,7 +54,7 @@ export default async function SyllabusPage({
 
   return (
     <main className="min-h-screen px-6 py-12 max-w-3xl mx-auto">
-      <Link href="/" className="text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 mb-6 inline-block">
+      <Link href="/" className="text-sm text-muted hover:text-foreground mb-6 inline-block">
         ← Home
       </Link>
       <SyllabusView initial={data} />

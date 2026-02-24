@@ -72,25 +72,25 @@ export default function SyllabusView({ initial }: { initial: SyllabusData }) {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-1">{outline.title}</h1>
-      <p className="text-zinc-500 dark:text-zinc-400 mb-4">{outline.description}</p>
+      <h1 className="text-2xl font-bold mb-1 text-heading">{outline.title}</h1>
+      <p className="text-muted mb-4">{outline.description}</p>
 
-      <div className="flex flex-wrap gap-4 text-sm text-zinc-600 dark:text-zinc-400 mb-6">
+      <div className="flex flex-wrap gap-4 text-sm text-foreground mb-6">
         <span>
-          <strong>Audience:</strong> {outline.audience}
+          <span className="text-strong font-semibold">Audience:</span> {outline.audience}
         </span>
         <span>
-          <strong>Level:</strong> {data.level}
+          <span className="text-strong font-semibold">Level:</span> {data.level}
         </span>
         <span>
-          <strong>Progress:</strong> {readyCount}/{totalCount} lessons
+          <span className="text-strong font-semibold">Progress:</span> {readyCount}/{totalCount} lessons
         </span>
       </div>
 
       {outline.prerequisites.length > 0 && (
         <div className="mb-4">
-          <h3 className="text-sm font-semibold mb-1">Prerequisites</h3>
-          <ul className="list-disc list-inside text-sm text-zinc-600 dark:text-zinc-400">
+          <h3 className="text-sm font-semibold mb-1 text-strong">Prerequisites</h3>
+          <ul className="list-disc list-inside text-sm text-foreground">
             {outline.prerequisites.map((p, i) => (
               <li key={i}>{p}</li>
             ))}
@@ -100,8 +100,8 @@ export default function SyllabusView({ initial }: { initial: SyllabusData }) {
 
       {outline.assumptions.length > 0 && (
         <div className="mb-6">
-          <h3 className="text-sm font-semibold mb-1">Assumptions</h3>
-          <ul className="list-disc list-inside text-sm text-zinc-600 dark:text-zinc-400">
+          <h3 className="text-sm font-semibold mb-1 text-strong">Assumptions</h3>
+          <ul className="list-disc list-inside text-sm text-foreground">
             {outline.assumptions.map((a, i) => (
               <li key={i}>{a}</li>
             ))}
@@ -110,12 +110,12 @@ export default function SyllabusView({ initial }: { initial: SyllabusData }) {
       )}
 
       <div className="flex items-center gap-3 mb-4">
-        <h2 className="text-lg font-semibold">Lessons</h2>
+        <h2 className="text-lg font-semibold text-heading">Lessons</h2>
         {readyCount < totalCount && (
           <button
             onClick={generateNext}
             disabled={generatingNext}
-            className="rounded bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 px-3 py-1 text-xs font-medium hover:opacity-90 disabled:opacity-50"
+            className="rounded bg-link text-background px-3 py-1 text-xs font-medium hover:opacity-90 disabled:opacity-50"
           >
             {generatingNext ? "Generating…" : "Generate next lesson"}
           </button>
@@ -126,10 +126,10 @@ export default function SyllabusView({ initial }: { initial: SyllabusData }) {
         {data.lessons.map((les) => (
           <li
             key={les.id}
-            className="flex items-center justify-between rounded-md border border-zinc-200 dark:border-zinc-800 px-4 py-3"
+            className="flex items-center justify-between rounded-md border border-border bg-surface px-4 py-3"
           >
             <div className="flex items-center gap-3 min-w-0">
-              <span className="text-xs font-mono text-zinc-400">{les.lessonId}</span>
+              <span className="text-xs font-mono text-muted">{les.lessonId}</span>
               <span className="text-sm truncate">{les.title}</span>
               <StatusBadge status={les.status} />
             </div>
@@ -137,7 +137,7 @@ export default function SyllabusView({ initial }: { initial: SyllabusData }) {
               {les.status === "ready" ? (
                 <Link
                   href={`/s/${data.slug}/${les.lessonId}`}
-                  className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                  className="text-xs font-medium text-link hover:underline"
                 >
                   Open
                 </Link>
@@ -145,12 +145,12 @@ export default function SyllabusView({ initial }: { initial: SyllabusData }) {
                 <button
                   onClick={() => generateLesson(les.idx)}
                   disabled={generatingIdx.has(les.idx)}
-                  className="text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-50"
+                  className="text-xs font-medium text-muted hover:text-foreground disabled:opacity-50"
                 >
                   {generatingIdx.has(les.idx) ? "Generating…" : "Generate"}
                 </button>
               ) : les.status === "generating" ? (
-                <span className="text-xs text-yellow-600">Generating…</span>
+                <span className="text-xs text-heading">Generating…</span>
               ) : null}
             </div>
           </li>
@@ -162,10 +162,10 @@ export default function SyllabusView({ initial }: { initial: SyllabusData }) {
 
 function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
-    pending: "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400",
-    generating: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300",
-    ready: "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300",
-    error: "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300",
+    pending: "bg-muted/30 text-muted",
+    generating: "bg-heading/20 text-heading",
+    ready: "bg-accent/20 text-accent",
+    error: "bg-red-500/20 text-red-400",
   };
 
   return (
