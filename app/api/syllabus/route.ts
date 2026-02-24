@@ -5,9 +5,15 @@ import { syllabus, lesson } from "@/db/schema";
 import { openai } from "@/lib/ai";
 import { outlineSchema } from "@/lib/outline-schema";
 import { makeSlug } from "@/lib/slug";
+import { auth } from "@/auth";
 
 export async function POST(req: Request) {
   try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await req.json();
     const { brief, level, constraints } = body as {
       brief: string;
@@ -53,6 +59,7 @@ Rules:
       constraints: constraints || null,
       outlineJson: outline,
       status: "outlined",
+      userId: session.user.id,
     });
 
     const syllabusRows = await db

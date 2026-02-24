@@ -1,18 +1,24 @@
 import { NextResponse } from "next/server";
-import { eq, asc } from "drizzle-orm";
+import { eq, asc, and } from "drizzle-orm";
 import { db } from "@/db";
 import { syllabus, lesson } from "@/db/schema";
+import { auth } from "@/auth";
 
 export async function GET(
   _req: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const { slug } = await params;
 
   const syllabusRows = await db
     .select()
     .from(syllabus)
-    .where(eq(syllabus.slug, slug))
+    .where(and(eq(syllabus.slug, slug), eq(syllabus.userId, session.user.id)))
     .limit(1);
 
   if (!syllabusRows.length) {
