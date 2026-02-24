@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { db } from "@/db";
 import { syllabus, lesson } from "@/db/schema";
 import LessonContent from "@/components/lesson-content";
+import LessonChatDrawer from "@/components/lesson-chat-drawer";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -65,6 +66,16 @@ export default async function LessonPage({
         ← Back to syllabus
       </Link>
       <LessonContent markdown={les.contentMd} />
+      <LessonChatDrawer
+        lessonContext={{
+          syllabusSlug: slug,
+          syllabusTitle: syl.title,
+          lessonId: les.lessonId,
+          lessonTitle: les.title,
+          lessonIdx: les.idx,
+          contentMd: les.contentMd,
+        }}
+      />
     </main>
   );
 }
